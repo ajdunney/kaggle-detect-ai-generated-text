@@ -1,0 +1,31 @@
+name: kaggle-detect-ai-generated-text
+
+python_env: python_env.yaml
+
+entry_points:
+  load_raw_data:
+    parameters:
+      dataset_name: {type: str, default: ""} # required if dataset_type is dataset
+      dataset_type: {type: str, default: competition} # competition or dataset
+    command: "python download_raw_data.py --dataset_type {dataset_type} --dataset_name {dataset_name}"
+
+  process_data:
+    parameters:
+      data_split: train
+    command: "python add_features.py --data_split {data_split}"
+
+  train:
+    parameters:
+      model_name: distilbert
+    command: "python train.py --model_name {model_name}"
+  
+  main:
+    parameters:
+      data_file: path
+      regularization: {type: float, default: 0.1}
+    command: "python train.py -r {regularization} {data_file}"
+
+  validate:
+    parameters:
+      data_file: path
+    command: "python validate.py {data_file}"

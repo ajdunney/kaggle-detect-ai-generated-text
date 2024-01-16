@@ -1,0 +1,36 @@
+# Need to write a function to log all
+# this to mlflow 
+
+data:
+  zip_destination_folder: "./data/"
+  raw_data_folder: "./data/raw/"
+  processed_data_folder: "./data/processed/"
+
+model:
+  roberta-base:
+    max_len: 512
+    model_name: "roberta-base"
+    tokenizer_name: "roberta-base"
+    hidden_size: 768
+    pre_classifier_dim: 768
+    dropout_rate: 0.3
+
+training:
+  k_folds: 3
+  train_batch_size: 8
+  eval_batch_size: 8
+  train_shuffle: True
+  eval_shuffle: False
+  train_num_workers: 4
+  eval_num_workers: 4
+  num_epochs: 1
+  learning_rate: 1e-5
+  loss_function: "BCEWithLogitsLoss"
+
+kaggle:
+  credentials_path: "./kaggle.json" # usually ~/.kaggle/kaggle.json
+  competition_name: "llm-detect-ai-generated-text"
+
+mlflow:
+  experiment_name: competition_name
+  tracking_uri: "http://localhost:8080"
